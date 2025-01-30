@@ -11,7 +11,7 @@ using PCStore.Data;
 namespace PCStore.Migrations
 {
     [DbContext(typeof(PcShopContext))]
-    [Migration("20250128063522_InitialCreate")]
+    [Migration("20250130004556_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,7 +42,7 @@ namespace PCStore.Migrations
                     b.Property<int>("Cores")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -50,8 +50,8 @@ namespace PCStore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -70,19 +70,19 @@ namespace PCStore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Memory")
                         .HasColumnType("int");
+
+                    b.Property<string>("Model")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

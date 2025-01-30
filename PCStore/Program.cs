@@ -1,5 +1,8 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using PCStore.Data;
+using PCStore.HealthChecks;
+using PCStore.Models;
 using PCStore.Repositories;
 using PCStore.Services;
 
@@ -18,6 +21,9 @@ builder.Services.AddScoped<IBusinessService, BusinessService>();
 
 builder.Services.AddDbContext<PcShopContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddValidatorsFromAssemblyContaining<CPUValidator>();
+builder.Services.AddHealthChecks().AddCheck<DatabaseHealthCheck>("Database");
 
 var app = builder.Build();
 
@@ -51,6 +57,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseHealthChecks("/health");
 
 app.MapControllerRoute(
     name: "default",
