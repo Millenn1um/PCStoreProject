@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using PCStore.Data;
+using PCStore.HealthChecks;
 using PCStore.Models;
 using PCStore.Repositories;
 using PCStore.Services;
@@ -9,7 +10,9 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddValidatorsFromAssemblyContaining<CPUValidator>(); // Add FluentValidation
-builder.Services.AddHealthChecks(); // Add HealthChecks
+
+builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseHealthCheck>("Database");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -48,7 +51,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.MapHealthChecks("/health");
+app.MapHealthChecks("/healthz");
 app.MapControllers();
 app.Run();
 
