@@ -52,7 +52,6 @@ namespace PCStore.Controllers
             if (existingCPU == null)
                 return NotFound();
             existingCPU.Name = cpu.Name;
-            existingCPU.Brand = cpu.Brand;
             existingCPU.Price = cpu.Price;
             existingCPU.Cores = cpu.Cores;
             existingCPU.ClockSpeed = cpu.ClockSpeed;
@@ -107,7 +106,6 @@ namespace PCStore.Controllers
             if (existingGPU == null)
                 return NotFound();
             existingGPU.Name = gpu.Name;
-            existingGPU.Brand = gpu.Brand;
             existingGPU.Price = gpu.Price;
             existingGPU.Memory = gpu.Memory;
             return NoContent();
