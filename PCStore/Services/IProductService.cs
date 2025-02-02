@@ -8,5 +8,7 @@ namespace PCStore.Services
         IEnumerable<GPU> GetGPUs();
         CPU GetCPUById(int id);
         GPU GetGPUById(int id);
+        void DeleteCPU(int id);
+        void DeleteGPU(int id);
     }
 }

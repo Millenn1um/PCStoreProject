@@ -42,22 +42,6 @@ namespace PCStore.Controllers
             return CreatedAtAction(nameof(GetCPUById), new { id = cpu.Id }, cpu);
         }
 
-        // PUT: api/products/cpus/{id}
-        [HttpPut("cpus/{id}")]
-        public IActionResult UpdateCPU(int id, [FromBody] CPU cpu)
-        {
-            if (cpu == null || cpu.Id != id)
-                return BadRequest();
-            var existingCPU = _productService.GetCPUById(id);
-            if (existingCPU == null)
-                return NotFound();
-            existingCPU.Name = cpu.Name;
-            existingCPU.Price = cpu.Price;
-            existingCPU.Cores = cpu.Cores;
-            existingCPU.ClockSpeed = cpu.ClockSpeed;
-            return NoContent();
-        }
-
         // DELETE: api/products/cpus/{id}
         [HttpDelete("cpus/{id}")]
         public IActionResult DeleteCPU(int id)
@@ -65,7 +49,7 @@ namespace PCStore.Controllers
             var cpu = _productService.GetCPUById(id);
             if (cpu == null)
                 return NotFound();
-            _productService.GetCPUs().ToList().Remove(cpu);
+            _productService.DeleteCPU(id);  // Uses the service method to delete CPU
             return NoContent();
         }
 
@@ -96,21 +80,6 @@ namespace PCStore.Controllers
             return CreatedAtAction(nameof(GetGPUById), new { id = gpu.Id }, gpu);
         }
 
-        // PUT: api/products/gpus/{id}
-        [HttpPut("gpus/{id}")]
-        public IActionResult UpdateGPU(int id, [FromBody] GPU gpu)
-        {
-            if (gpu == null || gpu.Id != id)
-                return BadRequest();
-            var existingGPU = _productService.GetGPUById(id);
-            if (existingGPU == null)
-                return NotFound();
-            existingGPU.Name = gpu.Name;
-            existingGPU.Price = gpu.Price;
-            existingGPU.Memory = gpu.Memory;
-            return NoContent();
-        }
-
         // DELETE: api/products/gpus/{id}
         [HttpDelete("gpus/{id}")]
         public IActionResult DeleteGPU(int id)
@@ -118,7 +87,7 @@ namespace PCStore.Controllers
             var gpu = _productService.GetGPUById(id);
             if (gpu == null)
                 return NotFound();
-            _productService.GetGPUs().ToList().Remove(gpu);
+            _productService.DeleteGPU(id);  // Uses the service method to delete GPU
             return NoContent();
         }
     }
