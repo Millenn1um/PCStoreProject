@@ -6,9 +6,9 @@ namespace PCStore.Services
     {
         IEnumerable<CPU> GetCPUs();
         IEnumerable<GPU> GetGPUs();
-        CPU GetCPUById(int id);
-        GPU GetGPUById(int id);
-        void DeleteCPU(int id);
-        void DeleteGPU(int id);
+        object GetProductById(int id);
+        void AddCPU(CPU cpu);
+        void AddGPU(GPU gpu);
+        bool DeleteProduct(int id);
     }
 }

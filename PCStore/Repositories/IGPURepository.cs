@@ -6,7 +6,7 @@ namespace PCStore.Repositories
     public interface IGPURepository
     {
         IEnumerable<GPU> GetAllGPUs();
-        GPU GetGPUById(int id);
+        GPU? GetGPUById(int id);
         void AddGPU(GPU gpu);
         void UpdateGPU(GPU gpu);
         void DeleteGPU(int id);
@@ -23,7 +23,7 @@ namespace PCStore.Repositories
 
         public IEnumerable<GPU> GetAllGPUs() => _context.GPUs.ToList();
 
-        public GPU GetGPUById(int id) => _context.GPUs.FirstOrDefault(g => g.Id == id);
+        public GPU? GetGPUById(int id) => _context.GPUs.FirstOrDefault(g => g.Id == id);
 
         public void AddGPU(GPU gpu)
         {

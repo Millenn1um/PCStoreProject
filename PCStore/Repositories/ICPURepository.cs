@@ -6,7 +6,7 @@ namespace PCStore.Repositories
     public interface ICPURepository
     {
         IEnumerable<CPU> GetAllCPUs();
-        CPU GetCPUById(int id);
+        CPU? GetCPUById(int id);
         void AddCPU(CPU cpu);
         void UpdateCPU(CPU cpu);
         void DeleteCPU(int id);
@@ -23,7 +23,7 @@ namespace PCStore.Repositories
 
         public IEnumerable<CPU> GetAllCPUs() => _context.CPUs.ToList();
 
-        public CPU GetCPUById(int id) => _context.CPUs.FirstOrDefault(c => c.Id == id);
+        public CPU? GetCPUById(int id) => _context.CPUs.FirstOrDefault(c => c.Id == id);
 
         public void AddCPU(CPU cpu)
         {

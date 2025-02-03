@@ -20,30 +20,40 @@ namespace PCStore.Services
         // Retrieve all GPUs
         public IEnumerable<GPU> GetGPUs() => _gpuRepository.GetAllGPUs();
 
-        // Retrieve a CPU by its ID
-        public CPU GetCPUById(int id) => _cpuRepository.GetCPUById(id);
+        // Retrieve a product by its ID
+        public object GetProductById(int id)
+        {
+            var cpu = _cpuRepository.GetCPUById(id);
+            if (cpu != null) return cpu;
 
-        // Retrieve a GPU by its ID
-        public GPU GetGPUById(int id) => _gpuRepository.GetGPUById(id);
+            var gpu = _gpuRepository.GetGPUById(id);
+            return gpu;
+        }
 
-        // Delete a CPU by its ID
-        public void DeleteCPU(int id)
+        // Add a CPU
+        public void AddCPU(CPU cpu) => _cpuRepository.AddCPU(cpu);
+
+        // Add a GPU
+        public void AddGPU(GPU gpu) => _gpuRepository.AddGPU(gpu);
+
+        // Delete a product by its ID
+        public bool DeleteProduct(int id)
         {
             var cpu = _cpuRepository.GetCPUById(id);
             if (cpu != null)
             {
-                _cpuRepository.DeleteCPU(id);  // Call the repository's Delete method
+                _cpuRepository.DeleteCPU(id);
+                return true;
             }
-        }
 
-        // Delete a GPU by its ID
-        public void DeleteGPU(int id)
-        {
             var gpu = _gpuRepository.GetGPUById(id);
             if (gpu != null)
             {
-                _gpuRepository.DeleteGPU(id);  // Call the repository's Delete method
+                _gpuRepository.DeleteGPU(id);
+                return true;
             }
+
+            return false;
         }
     }
 }

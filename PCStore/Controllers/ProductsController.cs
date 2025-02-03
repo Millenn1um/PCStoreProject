@@ -22,14 +22,21 @@ namespace PCStore.Controllers
             return Ok(_productService.GetCPUs());
         }
 
-        // GET: api/products/cpus/{id}
-        [HttpGet("cpus/{id}")]
-        public IActionResult GetCPUById(int id)
+        // GET: api/products/gpus
+        [HttpGet("gpus")]
+        public IActionResult GetAllGPUs()
         {
-            var cpu = _productService.GetCPUById(id);
-            if (cpu == null)
+            return Ok(_productService.GetGPUs());
+        }
+
+        // GET: api/products/{id}
+        [HttpGet("{id}")]
+        public IActionResult GetProductById(int id)
+        {
+            var product = _productService.GetProductById(id);
+            if (product == null)
                 return NotFound();
-            return Ok(cpu);
+            return Ok(product);
         }
 
         // POST: api/products/cpus
@@ -38,36 +45,8 @@ namespace PCStore.Controllers
         {
             if (cpu == null)
                 return BadRequest();
-            _productService.GetCPUs().ToList().Add(cpu);
-            return CreatedAtAction(nameof(GetCPUById), new { id = cpu.Id }, cpu);
-        }
-
-        // DELETE: api/products/cpus/{id}
-        [HttpDelete("cpus/{id}")]
-        public IActionResult DeleteCPU(int id)
-        {
-            var cpu = _productService.GetCPUById(id);
-            if (cpu == null)
-                return NotFound();
-            _productService.DeleteCPU(id);  // Uses the service method to delete CPU
-            return NoContent();
-        }
-
-        // GET: api/products/gpus
-        [HttpGet("gpus")]
-        public IActionResult GetAllGPUs()
-        {
-            return Ok(_productService.GetGPUs());
-        }
-
-        // GET: api/products/gpus/{id}
-        [HttpGet("gpus/{id}")]
-        public IActionResult GetGPUById(int id)
-        {
-            var gpu = _productService.GetGPUById(id);
-            if (gpu == null)
-                return NotFound();
-            return Ok(gpu);
+            _productService.AddCPU(cpu);
+            return CreatedAtAction(nameof(GetProductById), new { id = cpu.Id }, cpu);
         }
 
         // POST: api/products/gpus
@@ -76,18 +55,17 @@ namespace PCStore.Controllers
         {
             if (gpu == null)
                 return BadRequest();
-            _productService.GetGPUs().ToList().Add(gpu);
-            return CreatedAtAction(nameof(GetGPUById), new { id = gpu.Id }, gpu);
+            _productService.AddGPU(gpu);
+            return CreatedAtAction(nameof(GetProductById), new { id = gpu.Id }, gpu);
         }
 
-        // DELETE: api/products/gpus/{id}
-        [HttpDelete("gpus/{id}")]
-        public IActionResult DeleteGPU(int id)
+        // DELETE: api/products/{id}
+        [HttpDelete("{id}")]
+        public IActionResult DeleteProduct(int id)
         {
-            var gpu = _productService.GetGPUById(id);
-            if (gpu == null)
+            bool deleted = _productService.DeleteProduct(id);
+            if (!deleted)
                 return NotFound();
-            _productService.DeleteGPU(id);  // Uses the service method to delete GPU
             return NoContent();
         }
     }
